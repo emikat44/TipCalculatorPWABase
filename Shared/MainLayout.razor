@@ -1,14 +1,16 @@
 ﻿@inherits LayoutComponentBase
-
+<style>
+    div.page {
+        height: 100vh;
+        background-image: url("css/images/20231025-sqare.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
 
         <article class="content px-4">
             @Body

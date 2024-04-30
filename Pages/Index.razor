@@ -1,9 +1,61 @@
 ﻿@page "/"
+ 
+<div style = "font-weight:bolder; font-size:x-large">
+    <EditForm Model="@myModel" OnValidSubmit="@CalculateTip">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        
+        <label>Pre-Tip Total: $</label>
+        <InputNumber id=preTipTotal @bind-Value=myModel.preTipTotal ></InputNumber>
 
-<PageTitle>Index</PageTitle>
+        <br />
+        <br />
+        <label>Select Tip Amount: </label><br />
+        <InputRadioGroup @bind-Value=myModel.tipPercent >
+            <InputRadio Value=15 /> 15%<br />
+            <InputRadio Value=18 /> 18%<br />
+            <InputRadio Value=20 /> 20%<br />
+            <InputRadio Value=-1 /> 
+        </InputRadioGroup>
+        <InputNumber @bind-Value=otherTip ></InputNumber>%
+        <br />
+        <br />
+        <button type="submit">Calculate Total</button>
+        <br />
+        <br />
+        <div >
+            Tip Amount: $@tipAmount
+            <br />
+            Total: $@myModel.postTipTotal
+        </div>
+    </EditForm>
+</div>
 
-<h1>Hello, world! Testing a Change</h1>
+@code
+{
+    private Items myModel = new Items();
+    int otherTip;
+    decimal tipAmount;
+    public class Items {
+        public decimal preTipTotal { get; set; }
+        public int tipPercent { get; set; }
+        public decimal postTipTotal { get; set; }
+    }
 
-Welcome to your new app.
+    private void CalculateTip()
+    {
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+        if(myModel.tipPercent==-1)
+        {
+            myModel.postTipTotal = myModel.preTipTotal+ myModel.preTipTotal*((decimal)otherTip / (decimal)100);
+            tipAmount = myModel.preTipTotal*((decimal)otherTip / (decimal)100);
+        }
+        else
+        {
+            myModel.postTipTotal = myModel.preTipTotal+ myModel.preTipTotal*((decimal)myModel.tipPercent / (decimal)100);
+            tipAmount = myModel.preTipTotal*((decimal)myModel.tipPercent / (decimal)100);
+        }
+    }
+
+    //style="background-color: rgba(255,255,255,.3)"
+}
