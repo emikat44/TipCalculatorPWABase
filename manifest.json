@@ -1,6 +1,6 @@
 {
-  "name": "DemoPWA4",
-  "short_name": "DemoPWA4",
+  "name": "Tip Calculator Name",
+  "short_name": "Tip Calc",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
