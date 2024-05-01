@@ -33,11 +33,11 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-qZpEMLJcS2aN+0bOzZKZRcO7NSHPU2zZOUXWhZdanuc=",
+      "hash": "sha256-q511AJdgHDAjxkZcS+hRF9SsbSASybDDASnVsBJyOnk=",
       "url": "_framework\/blazor.boot.json"
     },
     {
-      "hash": "sha256-fhqCt9dVdqTDOq9izZlK2DcSjTMevgiXGAo8KZrn2MQ=",
+      "hash": "sha256-TcEdMxywSE8By75I+XBLnK04nBE5sou87PEWt1NP4sQ=",
       "url": "_framework\/DemoPWA4.dll"
     },
     {
@@ -161,7 +161,7 @@
       "url": "_framework\/System.ObjectModel.dll"
     },
     {
-      "hash": "sha256-hYDZiOr2XWNOlRUMVZeVmwtuNtItEifa65kMLMilbOs=",
+      "hash": "sha256-4w2th5ABJdMgbs5By92\/52ZwynD5oHvoAoyu+WpVb0E=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
@@ -177,7 +177,7 @@
       "url": "_framework\/System.Runtime.CompilerServices.Unsafe.dll"
     },
     {
-      "hash": "sha256-rKre9aIawjJC++B9zIbKR8ZbUQaRuEvariOxXkFEFGU=",
+      "hash": "sha256-K737ihHdpcTdB0E6qR3bRq7aKnxXaw\/6AiOOnn5vWJ0=",
       "url": "_framework\/System.Runtime.dll"
     },
     {
@@ -273,5 +273,5 @@
       "url": "sample-data\/weather.json"
     }
   ],
-  "version": "Ep7Vg9r6"
+  "version": "K0gdd3t6"
 };
