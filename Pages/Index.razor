@@ -47,13 +47,13 @@
 
         if(myModel.tipPercent==-1)
         {
-            myModel.postTipTotal = myModel.preTipTotal+ myModel.preTipTotal*((decimal)otherTip / (decimal)100);
-            tipAmount = myModel.preTipTotal*((decimal)otherTip / (decimal)100);
+            myModel.postTipTotal = Math.Round(myModel.preTipTotal + myModel.preTipTotal * ((decimal)otherTip / (decimal)100),2);
+            tipAmount = Math.Round(myModel.preTipTotal*((decimal)otherTip / (decimal)100),2);
         }
         else
         {
-            myModel.postTipTotal = myModel.preTipTotal+ myModel.preTipTotal*((decimal)myModel.tipPercent / (decimal)100);
-            tipAmount = myModel.preTipTotal*((decimal)myModel.tipPercent / (decimal)100);
+            myModel.postTipTotal = Math.Round(myModel.preTipTotal+ myModel.preTipTotal*((decimal)myModel.tipPercent / (decimal)100),2);
+            tipAmount = Math.Round(myModel.preTipTotal*((decimal)myModel.tipPercent / (decimal)100),2);
         }
     }
 
