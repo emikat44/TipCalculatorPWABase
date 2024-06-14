@@ -1,12 +1,33 @@
 ﻿@inherits LayoutComponentBase
 <style>
-    div.page {
+/*     div.page {
         height: 100vh;
         background-image: url("css/images/20231025-sqare.png");
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+    } */
+
+    div.page {
+        position: relative;
     }
+
+        div.page::before {
+            height: 100vh;
+            background-image: url("css/images/20231025-sqare.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+          opacity: 0.7;
+            z-index: -1;
+        }
+
 </style>
 <div class="page">
 

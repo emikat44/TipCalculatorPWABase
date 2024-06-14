@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+
+
+<SfNumericTextBox TValue="decimal?" @bind-Value="@MoneyValue" Format="c2" Placeholder="@placeHolder" FloatLabelType="@FloatLabelType.Auto">
+    <NumericTextBoxEvents TValue="decimal?" ValueChange="@OnChange"></NumericTextBoxEvents>
+
+</SfNumericTextBox>
+
+
+
+
+
+
+
+
+@code {
+    [Parameter]
+    public string? placeHolder { get; set; } = "";
+    // [Parameter]
+    // public decimal? moneyValue { get; set; } = null;
+
+    private decimal? moneyValue { get; set; } = null;
+
+    [Parameter]
+    public decimal? MoneyValue
+    {
+        get { return moneyValue; }
+        set
+        {
+            if (moneyValue != value)
+            {
+                moneyValue = value;
+                if (MoneyValueChanged.HasDelegate)
+                {
+                    MoneyValueChanged.InvokeAsync(moneyValue);
+                }
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<decimal?> MoneyValueChanged { get; set; }
+
+    [Parameter]
+    public Action? onChange { get; set; }
+    
+    public async Task OnChange()
+    {
+        onChange?.Invoke();
+
+    }
+
+    string? moneyValueStr { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        moneyValueStr = getMoneyStr();
+        StateHasChanged();
+    }
+
+    private string getLabel()
+    {
+        return placeHolder + ": ";   
+    }
+
+    private string? getMoneyStr()
+    {
+        if (MoneyValue != null)
+        {
+            return "$" + MoneyValue?.ToString("0.00");
+
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    private void updateValue()
+    {
+        char[] charsToTrim = { '$', ' ' };
+        moneyValueStr = moneyValueStr?.Trim(charsToTrim);
+
+        decimal.TryParse(moneyValueStr, out var v);
+        MoneyValue = v;
+        moneyValueStr=getMoneyStr();
+        StateHasChanged();
+    }
+
+}
+

@@ -1,61 +1,207 @@
 ﻿@page "/"
+@using DemoPWA4.Shared.Models
+@using DemoPWA4.Shared.Components
+
+
+<style>
+    /* inputCurrencyComponent Styles */
+    div.e-numeric.e-input-group.e-control-container.e-control-wrapper.e-float-input.valid label {
+        font-weight:bolder;
+        font-size:larger
+    }
+
+    /* SfNumericTextBox Styles */
+    .e-numeric.e-input-group.e-control-container.e-control-wrapper {
+        width: auto
+    } 
+
+    /*SfRadioButton Styles*/
+    div.e-radio-wrapper.e-wrapper label span.e-label{
+        font-weight:bold;
+        font-size:medium
+    }
+
+    /*SfCheckbox Styles*/
+    div.e-checkbox-wrapper.e-wrapper label span.e-label {
+        font-weight: bold;
+        font-size: medium
+    }
+
+    /* Custom color Switch */
+    .e-switch-wrapper.bar-color .e-switch-inner.e-switch-active,
+    .e-switch-wrapper.bar-color:hover .e-switch-inner.e-switch-active .e-switch-on {
+        background-color: #157347;
+        border-color: #157347;
+    }
+
+    .e-switch-wrapper.bar-color .e-switch-inner,
+    .e-switch-wrapper.bar-color .e-switch-off {
+        background-color: #157347;
+        border-color: #157347;
+    }
+
+    .e-switch-wrapper .e-switch-on, .e-css.e-switch-wrapper .e-switch-on {
+        background-color: #157347;
+        border-color: #157347;
+    }
+
+    .e-switch-wrapper.bar-color .e-switch-handle {
+        background-color: #fff;
+    }
+
+    .e-switch-wrapper .e-switch-off, .e-css.e-switch-wrapper .e-switch-off {
+        color: #fff
+    }
+        
+        </style>
  
 <div style = "font-weight:bolder; font-size:x-large">
-    <EditForm Model="@myModel" OnValidSubmit="@CalculateTip">
+    <EditForm Model="@myTipInputs" OnValidSubmit="@CalculateTip">
         <DataAnnotationsValidator />
         <ValidationSummary />
         
-        <label>Pre-Tip Total: $</label>
-        <InputNumber id=preTipTotal @bind-Value=myModel.preTipTotal ></InputNumber>
+        <InputCurrencyComponent placeHolder="Enter Pre-Tip Total" @bind-MoneyValue="@myTipInputs.preTipTotal" onChange="nullTipValues"></InputCurrencyComponent>
 
         <br />
         <br />
-        <label>Select Tip Amount: </label><br />
-        <InputRadioGroup @bind-Value=myModel.tipPercent >
-            <InputRadio Value=15 /> 15%<br />
-            <InputRadio Value=18 /> 18%<br />
-            <InputRadio Value=20 /> 20%<br />
-            <InputRadio Value=-1 /> 
-        </InputRadioGroup>
-        <InputNumber @bind-Value=otherTip ></InputNumber>%
+        <div>
+            <label style="font-size:large">Select Tip Amount: </label>
+            <SfSwitch CssClass="bar-color" @bind-Checked="tipByPercent" OnLabel="%" OffLabel="$" ></SfSwitch>
+        </div>
+ 
+        
+        @if (tipByPercent)
+        {
+            <SfRadioButton Label="15%" Name="options" TChecked="decimal?" Value="15" @bind-Checked="myTipInputs.selectedTipPercent"></SfRadioButton>
+
+            <br />
+            <SfRadioButton Label="18%" Name="options" TChecked="decimal?" Value="18" @bind-Checked="myTipInputs.selectedTipPercent"></SfRadioButton>
+
+            <br />
+            <SfRadioButton Label="20%" Name="options" TChecked="decimal?" Value="20" @bind-Checked="myTipInputs.selectedTipPercent"></SfRadioButton>
+
+            <br />
+            <SfRadioButton Label="" Name="options" TChecked="decimal?" Value="-1" @bind-Checked="myTipInputs.selectedTipPercent"></SfRadioButton>
+            <SfNumericTextBox TValue="int?" @bind-Value=customPercentTipAmount></SfNumericTextBox>
+        }
+        @if (!tipByPercent)
+        {
+            <InputCurrencyComponent placeHolder="Enter $ Tip Amount" @bind-MoneyValue="@myTipInputs.selectedTipDollarAmount"></InputCurrencyComponent><br />
+            @if(myTipInputs.selectedTipDollarAmount>0) {
+                <label>$@myTipInputs.selectedTipDollarAmount is @getSelectedTipPercent() of receipt total</label>
+            }
+        }
         <br />
+        <SfCheckBox Label="Round Total to Nearest Dollar?" @bind-Checked="roundTotal" Disabled=@(myTipInputs.preTipTotal==null || (myTipInputs.selectedTipPercent==null && myTipInputs.selectedTipDollarAmount==null))></SfCheckBox>
+        @if(roundTotal) {
+           <br /> <label style="font-size:medium">This will update the tip amount to @getCalculatedTipPercent().caluclatedTipPercent % of receipt total</label>
+        }
         <br />
-        <button type="submit">Calculate Total</button>
+        <SfButton CssClass="e-success" type="submit">Calculate Total</SfButton>
         <br />
         <br />
         <div >
-            Tip Amount: $@tipAmount
+            Tip Amount: $@myTipInputs.calculatedTipAmount?.ToString("0.00")
             <br />
-            Total: $@myModel.postTipTotal
+            Total: $@myTipInputs.postTipTotal?.ToString("0.00")
         </div>
+
     </EditForm>
 </div>
 
 @code
 {
-    private Items myModel = new Items();
-    int otherTip;
-    decimal tipAmount;
-    public class Items {
-        public decimal preTipTotal { get; set; }
-        public int tipPercent { get; set; }
+    public TipInputs myTipInputs { get; set; } = new TipInputs();
+    int? customPercentTipAmount;
+
+    private bool tipByPercent { get; set; } = true;
+    private bool roundTotal { get; set; } = false;
+
+    public class TotalValues
+    {
         public decimal postTipTotal { get; set; }
+        public decimal calculatedTipAmount { get; set; }
+        public decimal? caluclatedTipPercent { get; set; }
+    }
+
+    private TotalValues getCalculatedTotals()
+    {
+        TotalValues result = new TotalValues();
+
+        decimal preTipTotal;
+        if (myTipInputs.preTipTotal != null) { preTipTotal = (decimal)myTipInputs.preTipTotal; }
+        else { preTipTotal = 0; }
+        decimal postTipTotal;
+        decimal calculatedTipAmount;
+
+        if (tipByPercent)
+        {
+            if (myTipInputs.selectedTipPercent == -1)
+            {
+                postTipTotal = Math.Round(preTipTotal + preTipTotal * ((decimal)customPercentTipAmount / (decimal)100), 2);
+                calculatedTipAmount = Math.Round(preTipTotal * ((decimal)customPercentTipAmount / (decimal)100), 2);
+            }
+            else
+            {
+                postTipTotal = Math.Round(preTipTotal + preTipTotal * ((decimal)myTipInputs.selectedTipPercent / (decimal)100), 2);
+                calculatedTipAmount = Math.Round(preTipTotal * ((decimal)myTipInputs.selectedTipPercent / (decimal)100), 2);
+            }
+        }
+        else
+        {
+            calculatedTipAmount = Math.Round((decimal)myTipInputs.selectedTipDollarAmount, 2);
+            postTipTotal = Math.Round(preTipTotal + (decimal)calculatedTipAmount, 2);
+        }
+
+        result.postTipTotal = postTipTotal;
+        result.calculatedTipAmount = calculatedTipAmount;
+
+        return result;
+
     }
 
     private void CalculateTip()
     {
+        if(!roundTotal)
+        {
+            TotalValues finalValues = getCalculatedTotals();
+            myTipInputs.calculatedTipAmount = finalValues.calculatedTipAmount;
+            myTipInputs.postTipTotal = finalValues.postTipTotal;
+        }
+        if(roundTotal)
+        {
+            TotalValues finalValues = getCalculatedTipPercent();
+            myTipInputs.calculatedTipAmount = finalValues.calculatedTipAmount;
+            myTipInputs.postTipTotal = finalValues.postTipTotal;
+        }
 
-        if(myModel.tipPercent==-1)
-        {
-            myModel.postTipTotal = Math.Round(myModel.preTipTotal + myModel.preTipTotal * ((decimal)otherTip / (decimal)100),2);
-            tipAmount = Math.Round(myModel.preTipTotal*((decimal)otherTip / (decimal)100),2);
-        }
-        else
-        {
-            myModel.postTipTotal = Math.Round(myModel.preTipTotal+ myModel.preTipTotal*((decimal)myModel.tipPercent / (decimal)100),2);
-            tipAmount = Math.Round(myModel.preTipTotal*((decimal)myModel.tipPercent / (decimal)100),2);
-        }
     }
 
-    //style="background-color: rgba(255,255,255,.3)"
+    private void nullTipValues()
+    {
+
+        myTipInputs.selectedTipPercent = null; myTipInputs.selectedTipDollarAmount = null;
+        roundTotal = false;
+    }
+
+    private string getSelectedTipPercent()
+    {
+        myTipInputs.selectedTipPercent = Math.Round((decimal)myTipInputs.selectedTipDollarAmount / (decimal)myTipInputs.preTipTotal * (decimal)100, 1);
+        return myTipInputs.selectedTipPercent.ToString() + "%";
+    }
+
+    private TotalValues getCalculatedTipPercent()
+    {
+        TotalValues finalValues = getCalculatedTotals();
+
+        decimal updatedTotal = Math.Ceiling(finalValues.postTipTotal);
+        decimal difference = updatedTotal - finalValues.postTipTotal;
+        decimal updatedTipAmount = finalValues.calculatedTipAmount + difference;
+        decimal updatedTipPercent = Math.Round((updatedTipAmount / (decimal)myTipInputs.preTipTotal) * 100, 1);
+
+        TotalValues updatedValues = new TotalValues { calculatedTipAmount = updatedTipAmount, postTipTotal = updatedTotal, caluclatedTipPercent=updatedTipPercent };
+
+        return updatedValues;
+    }
+
 }
