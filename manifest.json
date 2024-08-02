@@ -1,5 +1,5 @@
 {
-  "name": "Tip Calculator Name",
+  "name": "Tip Calculator",
   "short_name": "Tip Calc",
   "start_url": "./",
   "display": "standalone",

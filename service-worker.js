@@ -46,4 +46,4 @@ async function onInstall(event) {
 
 //    return cachedResponse || fetch(event.request);
 //}
-/* Manifest version: rpZgLe0f */
+/* Manifest version: u4wF/GTP */
