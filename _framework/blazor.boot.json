@@ -7,7 +7,7 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "DemoPWA4.dll": "sha256-qbqYGa9fMSQbRn71xD5Doa5HpVwbR+xdw0clC6OPSq0=",
+      "DemoPWA4.dll": "sha256-rnVvYBUq2FMAqypaMDKfF0\/DZe8QCh9tZgHw6UJyBGk=",
       "Lib.Extensions.System.Windows.Forms.dll": "sha256-1YQrzd4zA1nRFoPmJ4GxsYZzM0xYEn9XltzILBgqqGE=",
       "Microsoft.AspNetCore.Components.dll": "sha256-AZr8ddH2NT22Gpf6+QB+utVyoOTtVVxqoWS8pWQvg+E=",
       "Microsoft.AspNetCore.Components.Forms.dll": "sha256-zajYzH+lIMRfArzr+1urv0hhVn5f3bB5an2h+3fGOps=",
