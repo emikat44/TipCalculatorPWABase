@@ -126,7 +126,7 @@
         
         @if (myTipInputs.tipByPercent)
         {
-            <SfSlider ID="oval_slider" Min="0" Max="30" TValue="decimal?" ShowButtons="false" @bind-Value="myTipInputs.selectedTipPercent">
+            <SfSlider ID="oval_slider" Min="0" Max="30" Step= "5" TValue="decimal?" ShowButtons="false" @bind-Value="myTipInputs.selectedTipPercent">
                 <SliderTicks Placement="Placement.After" ShowSmallTicks="true" LargeStep="5" SmallStep="1"></SliderTicks>
                 <SliderTooltip IsVisible="true" ShowOn="TooltipShowOn.Always" Placement="TooltipPlacement.Before"></SliderTooltip>
             </SfSlider>
@@ -238,9 +238,9 @@
     private void nullTipValues()
     {
 
-        myTipInputs.roundTotal = false;
-        myTipInputs.selectedTipPercent = null; 
-        myTipInputs.selectedTipDollarAmount = null;
+        //myTipInputs.roundTotal = false;
+        //myTipInputs.selectedTipPercent = null; 
+        //myTipInputs.selectedTipDollarAmount = null;
     }
 
     private string getSelectedTipPercent()

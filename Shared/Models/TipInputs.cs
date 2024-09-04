@@ -11,10 +11,12 @@ namespace DemoPWA4.Shared.Models
         public decimal? preTipTotal { get; set; }
 
         [RequiredIf(nameof(tipByPercent), true)]
+        [Range(0, Int32.MaxValue, ErrorMessage = "Tip % must be greater than 0")]
         [Display(Name = "Tip %")]
         public decimal? selectedTipPercent {  get; set; }
 
         [RequiredIf(nameof(tipByPercent), false)]
+        [Range(0, Int32.MaxValue, ErrorMessage = "Tip $ Amount must be greater than 0")]
         [Display(Name = "Tip $ Amount")]
         public decimal? selectedTipDollarAmount { get; set; }
 
