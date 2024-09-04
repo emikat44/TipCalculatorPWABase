@@ -46,4 +46,4 @@ async function onInstall(event) {
 
 //    return cachedResponse || fetch(event.request);
 //}
-/* Manifest version: ipsJQe/3 */
+/* Manifest version: lpfMOv85 */
