@@ -61,6 +61,14 @@
       "url": "css\/open-iconic\/README.md"
     },
     {
+      "hash": "sha256-6\/cd0+8ccXAgPK87nsSbuoKUHb0q+NLOwHbrPwUSXSw=",
+      "url": "Emiable_Logo_Vert.png"
+    },
+    {
+      "hash": "sha256-1VSuzUBIPzQSJfhfQEuuwWaw6Pu2s8t1MCCPRIhFbn0=",
+      "url": "EMIABLE.png"
+    },
+    {
       "hash": "sha256-Jtxf9L+5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=",
       "url": "favicon.ico"
     },
@@ -117,11 +125,11 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-J0KkxaqlMF1E0xWciZ9qYFBF+gO4\/vmKdcf+5F5ZrLU=",
+      "hash": "sha256-KPyGCP61Kx9A2v\/Chr9msulmFdK7QEUrGwMGgAAx1vg=",
       "url": "_framework\/blazor.boot.json"
     },
     {
-      "hash": "sha256-RIfFInHoCERa5hHF5nFBfzF6Y7G5VlHGCh0Gx8LuJ9s=",
+      "hash": "sha256-ZlO87gLNh+Ye8cZSNieD5193ziXs+D6LHri4Qb0qSQI=",
       "url": "_framework\/DemoPWA4.dll"
     },
     {
@@ -565,5 +573,5 @@
       "url": "_content\/Syncfusion.Blazor.Themes\/tailwind.css"
     }
   ],
-  "version": "lpfMOv85"
+  "version": "1paGJUDc"
 };
